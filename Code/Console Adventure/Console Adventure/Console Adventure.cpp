@@ -3,69 +3,86 @@
 
 #include <iostream>
 #include <random>
+#include <conio.h>
 
 using namespace std;
 
-struct Tiles {
-    int X;
-    int Y;
-    bool isMountain;
-    bool isWater;
-    bool hasPlayer;
-    bool hasEnemy;
-    bool isAttacked;
-};
-struct Player {
-    int x;
-    int y;
-};
+//char c = _getch();
+char map[15][15];
 
-Tiles map[15][15];
+int playerPosX = 7;
+int playerPosY = 0;
 
-void makeMap(int lengthX, int heightY, Tiles* map) {
-    int maxMountain = 0;
+void makeMap(int lengthX, int heightY, char mapFunction[15][15]) {
     for (int x = 0; x < lengthX; x++) {
         for (int y = 0; y < heightY; y++) {
-            map[x, y].X = x;
-            map[x, y].Y = y;
-            if (maxMountain > 3 && x > 5) {
-                map[x, y].isMountain = true;
-            }
+            mapFunction[x][y] = '.';
+            mapFunction[x][y] = '.';
         }
     }
 }
 
-void visualiseMap(int lengthX, int heightY, Tiles* map) {
+void visualiseMap(int lengthX, int heightY, char map[15][15]) {
+    system("cls");
+    cout << "Use Z/Q/S/D to move!" << endl;
     for (int x = 0; x < lengthX; x++) {
         for (int y = 0; y < heightY; y++) {
-            if (map[x, y].isMountain) {
-                cout << "A ";
-            }
-            else if (map[x, y].isWater) {
-                cout << "~ ";
-            }
-            else {
-                cout << ". ";
-            }
+            cout << map[x][y] << ' ';
         }
         cout << endl;
     }
 }
 
-int main() {
-    Tiles* mapPtr = *map;
-    makeMap(15, 15, mapPtr);
-    visualiseMap(15, 15, mapPtr);
-    cout << "Hello World!\n";
+char verifyInput() {
+    char c = _getch();
+    if (c == 'z' || c == 'q' || c == 's' || c == 'd') {
+        return c;
+    }
+    return NULL;
 }
 
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
+void movePlayer(int xMap,int yMap, char map[15][15],int* x, int* y) {
+    //This is the Player's current position
+    char input = verifyInput();
+    if (input == 'z') {
+        *x = *x - 1;
+        if (*x < 0) {
+            *x = *x + 1;
+        }
+        map[*x+1][*y] = '.';
+        map[*x][*y] = 'H'; 
+    }
+    else if (input == 'q') {
+        map[*x][*y] = '.';
+        *y = *y - 1;
+        map[*x][*y] = 'H';
+    }
+    else if (input == 's') {
+        map[*x][*y] = '.';
+        *x = *x + 1;
+        map[*x][*y] = 'H';
+    }
+    else if (input == 'd') {
+        map[*x][*y] = '.';
+        *y = *y + 1;
+        map[*x][*y] = 'H';
+    }
+    
+}
 
-// Astuces pour bien démarrer : 
-//   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
-//   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
-//   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.
-//   4. Utilisez la fenêtre Liste d'erreurs pour voir les erreurs.
-//   5. Accédez à Projet > Ajouter un nouvel élément pour créer des fichiers de code, ou à Projet > Ajouter un élément existant pour ajouter des fichiers de code existants au projet.
-//   6. Pour rouvrir ce projet plus tard, accédez à Fichier > Ouvrir > Projet et sélectionnez le fichier .sln.
+int main() {
+    makeMap(15, 15, map);
+    map[7][0] = 'H';
+    visualiseMap(15, 15, map);
+    int* playerPosXPtr = &playerPosX;
+    int* playerPosYPtr = &playerPosY;
+    while (true) {
+        movePlayer(15, 15, map, playerPosXPtr, playerPosYPtr);
+
+
+        visualiseMap(15, 15, map);
+    }
+    
+    //cout << bs << endl << map[5][5];
+}
+

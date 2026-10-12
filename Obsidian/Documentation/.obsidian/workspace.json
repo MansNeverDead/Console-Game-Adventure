@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Structures/Tiles.md",
+                "file": "Structures/Map.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Tiles"
+              "title": "Map"
             }
           },
           {
@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Structures/Tiles.md",
+                "file": "Structures/Map.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Tiles"
+              "title": "Map"
             }
           }
         ],
@@ -114,7 +114,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Structures/Tiles.md",
+                "file": "Structures/Map.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -133,7 +133,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Structures/Tiles.md",
+                "file": "Structures/Map.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -176,7 +176,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Structures/Tiles.md",
+                "file": "Structures/Map.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -205,9 +205,9 @@
   },
   "active": "8534bde1b1d14978",
   "lastOpenFiles": [
+    "Documentation.md",
+    "Structures/Map.md",
     "Structures/Player.md",
-    "Structures/Tiles.md",
-    "Structures",
-    "Documentation.md"
+    "Structures"
   ]
 }
