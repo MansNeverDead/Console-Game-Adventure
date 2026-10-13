@@ -48,6 +48,7 @@ void movePlayer(int xMap,int yMap, char map[15][15],int* x, int* y) {
         *x = *x - 1;
         if (*x < 0) {
             *x = *x + 1;
+            return;
         }
         map[*x+1][*y] = '.';
         map[*x][*y] = 'H'; 

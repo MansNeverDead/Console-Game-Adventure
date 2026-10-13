@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Structures/Map.md",
+                "file": "file:C:/Users/ayetti/Downloads/programmation-imperative.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Map"
+              "title": "programmation-imperative"
             }
           },
           {
@@ -27,16 +27,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Structures/Map.md",
+                "file": "Structures/Player.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Map"
+              "title": "Player"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -203,11 +202,12 @@
       "bases:Créer une nouvelle base": false
     }
   },
-  "active": "8534bde1b1d14978",
+  "active": "f66a3f128a91cfa3",
   "lastOpenFiles": [
     "Documentation.md",
     "Structures/Map.md",
     "Structures/Player.md",
+    "file:C:/Users/ayetti/Downloads/programmation-imperative.md",
     "Structures"
   ]
 }
