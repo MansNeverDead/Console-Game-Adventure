@@ -1,1 +1,0 @@
-It is an array of characters, due to the fact that the console is mostly used with characters, an array of them will suffice to represent every element in the game.
