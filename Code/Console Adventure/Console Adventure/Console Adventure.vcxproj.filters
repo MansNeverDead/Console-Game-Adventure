@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Fichiers sources\Levels">
+      <UniqueIdentifier>{1bca0605-5073-41de-865c-06d8a097df34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console Adventure.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Level1.txt">
+      <Filter>Fichiers sources\Levels</Filter>
+    </Text>
+    <Text Include="Level3.txt">
+      <Filter>Fichiers sources\Levels</Filter>
+    </Text>
+    <Text Include="Level2.txt">
+      <Filter>Fichiers sources\Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>
