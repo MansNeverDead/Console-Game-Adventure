@@ -11,7 +11,7 @@ depending on that, it will increment or decrement the "velocity" of the player t
 
 it returns a **tuple** of X and Y.
 
-
+It is called inside of [[Main]]
 
 (Author's Note):
 The reason i chose for it to return a Tuple is because else if it were a simple int, we wouldn't know it is for X or for Y, and to solve this problem i just chose a tuple.

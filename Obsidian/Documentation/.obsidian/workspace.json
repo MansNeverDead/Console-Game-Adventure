@@ -111,12 +111,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "GDD.md",
+                "file": "Functions/Void Get Map.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GDD"
+              "title": "Void Get Map"
+            }
+          },
+          {
+            "id": "7b32ce4600a1e3cd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Functions/Void Receive Damage.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Void Receive Damage"
             }
           },
           {
@@ -147,21 +161,18 @@
             "id": "87cfc5a1c806a70d",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Functions.canvas",
-                "viewState": {
-                  "x": -711.3174284609115,
-                  "y": 931.3527998282444,
-                  "zoom": -2.333333333333333
-                }
+                "file": "GDD.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "Functions"
+              "icon": "lucide-file",
+              "title": "GDD"
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 11
       }
     ],
     "direction": "vertical"
@@ -328,17 +339,22 @@
       "bases:Create new base": false
     }
   },
-  "active": "70c17680a9c82062",
+  "active": "87cfc5a1c806a70d",
   "lastOpenFiles": [
     "Functions.canvas",
-    "Functions/Touching Enemy.md",
-    "Functions/Void Receive Damage.md",
-    "Functions/Bool Can Move.md",
-    "Variables/Struct Entity.md",
-    "GDD.md",
-    "Documentation.md",
     "Main.md",
+    "Variables/Struct Entity.md",
+    "Documentation.md",
     "Functions/Tuple Int, Int. Player Input.md",
+    "Functions/Untitled.md",
+    "Functions/Touching Enemy.md",
+    "Functions/Void Death Screen.md",
+    "Functions/Bool Beat Level.md",
+    "Functions/Void Receive Damage.md",
+    "Functions/Void Make Map.md",
+    "Functions/Void Get Map.md",
+    "GDD.md",
+    "Functions/Bool Can Move.md",
     "Functions/Void Visualise Map.md",
     "Functions/Char Translator.md",
     "Functions/Tuple of Int, Int Player Input.md",
@@ -346,7 +362,6 @@
     "file:C:/Users/ayetti/Downloads/programmation-imperative.md",
     "Variables/Int Map.md",
     "Variables/Enum Ground.md",
-    "Functions/Void Make Map.md",
     "Variables/Overworld Variables.md",
     "Functions",
     "Variables"

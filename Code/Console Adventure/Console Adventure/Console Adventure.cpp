@@ -46,6 +46,7 @@ struct Entity {
     int damage;
 };
 
+
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {
     for (int x = 0; x < lengthX; x++) {
         for (int y = 0; y < heightY; y++) {
@@ -74,6 +75,9 @@ char translator(int num) {
     }
     else if (num == river) {
         return '~';
+    }
+    else if (num == sortie) {
+        return 'E';
     }
     else {
         return '.';
@@ -134,11 +138,15 @@ tuple <int, int> playerInput() {
     return make_tuple(NULL, NULL);
 }
 
+void enemiesMOVING(Entity* enemy) {
+    return;
+}
+
 bool canMove(int x, int y, const int map[22][22]) {
     if (map[x][y] == mountain || map[x][y] == river) {
         return false;
     }
-    if (x > 22 || x < 0 || y < 0 || y > 22) {
+    if (x > 21 || x < 0 || y < 0 || y > 21) {
         return false;
     }
     return true;
@@ -151,26 +159,24 @@ void deathScreen() {
     cfi.nFont = 0;
     cfi.dwFontSize.X = 0;                   // Width of each character in the font
     cfi.dwFontSize.Y = 100;                  // Height
-    cfi.FontFamily = FF_DONTCARE;
-    cfi.FontWeight = FW_NORMAL;
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-    CONSOLE_SCREEN_BUFFER_INFOEX csbi{ sizeof csbi };
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi); //essentially saves the values we previously initialised
+    CONSOLE_SCREEN_BUFFER_INFOEX csbi{ sizeof csbi }; // Creates the CSBI struct where it saves all the aforemetionned variables
 
-    HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE); // This is essentially "cout" but for windows
 
-    GetConsoleScreenBufferInfoEx(hOutput, &csbi);
+    GetConsoleScreenBufferInfoEx(hOutput, &csbi); // sets the current csbi to the current settings of the console
 
-    csbi.wAttributes = BACKGROUND_RED;
+    csbi.wAttributes = BACKGROUND_RED; //...
 
-    SetConsoleScreenBufferInfoEx(hOutput, &csbi);
+    SetConsoleScreenBufferInfoEx(hOutput, &csbi); // updates the console's settings to everything mantionned above
     ::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
     printf("YOU DIED!!!!\n");
 
 
 }
 
-void recieveDamage(Entity* user, Entity opps) {
-    user->HP = user->HP - opps.damage;
+void recieveDamage(Entity* victim, int damage) {
+    victim->HP = victim->HP - damage;
 };
 
 bool touchingEnemy(Entity user, Entity array[7]) {
@@ -183,7 +189,7 @@ bool touchingEnemy(Entity user, Entity array[7]) {
     return false;
 }
 
-void getMap(string levelName, int grid[22][22]) {
+void getMap(string levelName, int grid[22][22], Entity* player, Entity* enemies) {
     string path = levelName + ".txt";
     ifstream file(path);
     if (!file) {
@@ -191,46 +197,74 @@ void getMap(string levelName, int grid[22][22]) {
         return;
     }
 
-    //int grid[22][22] = { 0 };
     string line;
 
-    int x = 0;
-    while (x < 22 && getline(file, line)) {
+    int enemiesIndex = 0;
+
+    for (int x = 0; x < 22 && getline(file, line); x++) {
         for (int y = 0; y < 22 && y < (int)line.size(); y++) {
-            if (line[y] >= '0' && line[y] <= '9') {
-                grid[x][y] = line[y] - '0';
+            grid[x][y] = line[y] - '0';
+            if (line[y] == '4') {
+                player->x = x; player->y = y;
             }
+            if (line[y] == '5') {
+                enemies[enemiesIndex].x = x; enemies[enemiesIndex].y = y;
+                enemiesIndex++;
+            }
+
         }
-        x++;
     }
 
+
+}
+
+bool beatLevel(int x, int y, int map[22][22] ) {
+    if (map[x][y] == 3) {
+        return true;
+    }
+    return false;
 }
 
 int main() {
     Entity user{ 0, 0, 'H', 1};
     Entity* userPtr = &user;
 
-    Entity firstEnemy{12, 20, 'X', 1, 1};
-    Entity secEnemy{10, 10, 'X', 1, 1};
-    Entity thEnemy{9, 13, 'X', 1, 1 };
-    Entity foEnemy{7, 7, 'X', 1, 1 };
-    Entity fiEnemy{3, 2, 'X', 1, 1 };
-    Entity sixEnemy{7, 6, 'X', 1, 1 };
-    Entity sevEnemy{20, 20, 'X', 1, 1 };
+    Entity firstEnemy{0, 0, 'X', 1, 1};
+    Entity secEnemy{0, 0, 'X', 1, 1};
+    Entity thEnemy{0, 0, 'X', 1, 1 };
+    Entity foEnemy{0, 0, 'X', 1, 1 };
+    Entity fiEnemy{0, 0, 'X', 1, 1 };
+    Entity sixEnemy{0, 0, 'X', 1, 1 };
+    Entity sevEnemy{0, 0, 'X', 1, 1 };
 
     Entity enemyArray[7]{ firstEnemy, secEnemy, thEnemy, foEnemy, fiEnemy, sixEnemy, sevEnemy };
-    getMap("Level1", map);
+
+    getMap("Level3", map, userPtr, enemyArray);
     //makeMap(22, 22, map);
     visualiseMap(22, 22, map, user, enemyArray);
     int addX = 0; int addY = 0;
     int tempMouvX; int tempMouvY;
+    int atLevel = 1;
     while (true) {
         tie(addX, addY) = playerInput();
         tempMouvX = user.x + addX;
         tempMouvY = user.y + addY;
+        
         if (canMove(tempMouvX, tempMouvY, map)) {
             user.x = tempMouvX; user.y = tempMouvY;
-
+        }
+        if (beatLevel(tempMouvX, tempMouvY, map) && atLevel == 1) {
+            getMap("Level2", map, userPtr, enemyArray);
+            atLevel = 2;
+        }
+        if (beatLevel(tempMouvX, tempMouvY, map) && atLevel == 2) {
+            getMap("Level3", map, userPtr, enemyArray);
+            atLevel = 3;
+        }
+        if (beatLevel(tempMouvX, tempMouvY, map) && atLevel == 3) {
+            system("cls");
+            cout << "You won...\nYou beat every level..\nYou outbested my every attempt at making you lose...\nYou beated the odds and won.\nSo cheer, celebrate like no tomorrow, for the Winner takes it ALL.";
+            break;
         }
         if (touchingEnemy(user, enemyArray)) {
             recieveDamage(userPtr, firstEnemy);
@@ -239,10 +273,11 @@ int main() {
                 break;
             }
         }
-        
         else {
             visualiseMap(22, 22, map, user, enemyArray);
         }
+
+
     }
     
     //cout << bs << endl << map[5][5];

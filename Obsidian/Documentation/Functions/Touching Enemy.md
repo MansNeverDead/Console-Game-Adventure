@@ -11,3 +11,5 @@ it returns true or false accordingly.
 It returns True if it touches the enemy, and false if not.)
 
 If it is true it calls [[Void Receive Damage]]
+
+It is called inside of [[Main]].
