@@ -5,6 +5,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Console Adventure.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|solutionrelative:Console Adventure\\Console Adventure.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level3.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|solutionrelative:Console Adventure\\Level3.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level1.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|solutionrelative:Console Adventure\\Level1.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level2.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{1F18D8A2-929A-453B-A9BF-C9755E3CC93E}|Console Adventure\\Console Adventure.vcxproj|solutionrelative:Console Adventure\\Level2.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +26,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Level3.txt",
+              "DocumentMoniker": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level3.txt",
+              "RelativeDocumentMoniker": "Console Adventure\\Level3.txt",
+              "ToolTip": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level3.txt",
+              "RelativeToolTip": "Console Adventure\\Level3.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-10-14T13:15:56.28Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Level2.txt",
+              "DocumentMoniker": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level2.txt",
+              "RelativeDocumentMoniker": "Console Adventure\\Level2.txt",
+              "ToolTip": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level2.txt",
+              "RelativeToolTip": "Console Adventure\\Level2.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-10-14T13:15:47.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Level1.txt",
+              "DocumentMoniker": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level1.txt",
+              "RelativeDocumentMoniker": "Console Adventure\\Level1.txt",
+              "ToolTip": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Level1.txt",
+              "RelativeToolTip": "Console Adventure\\Level1.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-10-14T13:15:36.396Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +76,7 @@
               "RelativeDocumentMoniker": "Console Adventure\\Console Adventure.cpp",
               "ToolTip": "C:\\Users\\ayetti\\Documents\\Github\\Console Adventure Map\\Code\\Console Adventure\\Console Adventure\\Console Adventure.cpp",
               "RelativeToolTip": "Console Adventure\\Console Adventure.cpp",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAwDIAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI0AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-10-12T12:06:00.926Z",
               "EditorCaption": ""
