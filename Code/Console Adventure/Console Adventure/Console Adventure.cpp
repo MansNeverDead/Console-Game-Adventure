@@ -24,30 +24,7 @@ Basic Definitions!
 */
 int map[22][22];
 
-tuple <int, int> playerInput(bool* isAttacking) {
-    int x = 0; int y = 0;
-    char input = verifyInput();
-    if (input == 'z') {
-        x = x - 1;
-        return make_tuple(x, y);
-    }
-    else if (input == 'q') {
-        y = y - 1;
-        return make_tuple(x, y);
-    }
-    else if (input == 's') {
-        x = x + 1;
-        return make_tuple(x, y);
-    }
-    else if (input == 'd') {
-        y = y + 1;
-        return make_tuple(x, y);
-    }
-    else if (input == 'a') {
-        *isAttacking = true;
-    }
-    return make_tuple(NULL, NULL);
-}
+
 
 void enemiesMOVING(Entity* enemy, Entity oppsArray[7], Entity player, bool spelled) {
     int directionX = enemy->x; int directionY = enemy->y;
@@ -68,20 +45,6 @@ void enemiesMOVING(Entity* enemy, Entity oppsArray[7], Entity player, bool spell
         enemy->x = directionX; enemy->y = directionY;
     }
 
-}
-
-void spellHitEnemy(Entity enemyArray[7], Entity player) {
-    int x = player.x - 1; int y = player.y - 1;
-
-    for (int index = 0; index < 7; index++) {
-
-        if (enemyArray[index].x <= player.x + 1 && enemyArray[index].x >= player.x - 1 && enemyArray[index].y <= player.y + 1 && enemyArray[index].y >= player.y - 1) {
-            recieveDamage(&enemyArray[index], player.damage);
-            if (enemyArray[index].HP <= 0) {
-                enemyArray[index].alive = false;
-            }
-        }
-    }
 }
 
 int main() {
@@ -122,6 +85,7 @@ int main() {
         if (isAttacking) {
             spellHitEnemy(enemyArray, user);
         }
+
         beatLevel(tempMouvX, tempMouvY, map, &atLevel, userPtr, enemyArray);
 
         

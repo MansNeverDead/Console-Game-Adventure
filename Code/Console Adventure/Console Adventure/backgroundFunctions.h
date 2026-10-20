@@ -1,8 +1,4 @@
 #pragma once
-
-#include <windows.h>
-#include <conio.h> 
-#include <cwchar>
 #include "Entity.h"
 
 int level = 0;
@@ -15,13 +11,7 @@ enum ground {
 };
 
 
-int verifyInput() {
-    char c = _getch();
-    if (c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 'a') {
-        return c;
-    }
-    return NULL;
-}
+
 
 char translator(int num) {
     if (num == basicGround) {
@@ -173,6 +163,19 @@ void beatLevel(int x, int y, int map[22][22], int* level, Entity* userPtr, Entit
     return;
 }
 
+void spellHitEnemy(Entity enemyArray[7], Entity player) {
+    int x = player.x - 1; int y = player.y - 1;
+
+    for (int index = 0; index < 7; index++) {
+
+        if (enemyArray[index].x <= player.x + 1 && enemyArray[index].x >= player.x - 1 && enemyArray[index].y <= player.y + 1 && enemyArray[index].y >= player.y - 1) {
+            recieveDamage(&enemyArray[index], player.damage);
+            if (enemyArray[index].HP <= 0) {
+                enemyArray[index].alive = false;
+            }
+        }
+    }
+}
 
 /*
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {
