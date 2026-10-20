@@ -124,7 +124,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Console Adventure.cpp" />
-    <ClCompile Include="EnemyClass.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Level3.txt" />
@@ -132,6 +131,7 @@
     <Text Include="Level2.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="backgroundFunctions.h" />
     <ClInclude Include="Entity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

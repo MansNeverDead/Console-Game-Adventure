@@ -1,17 +1,11 @@
-#include <iostream>
-#include "Entity.h"
-#pragma once
-
+#include <map>
 
 using namespace std;
 
-class Enemy {
-public:
-	//Enemy(Entity hello);
-	int currentState = 0;
-	void toggle() {
-		currentState++;
-	}
-
-private:
+enum enemyStateMachine {
+	pursueingPlayer = 0,
+	attacking = 1,
+	damaged = 2,
+	dying = 3,
 };
+
