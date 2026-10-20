@@ -1,5 +1,8 @@
-#pragma once
 #include "Entity.h"
+#include <fstream> // To open files
+#include <vector> // I believe this is self-explanatory
+#include <string> // To make getline() to work
+
 
 int level = 0;
 
@@ -40,13 +43,13 @@ int loopThroughEnemies(Entity oppsArray[7], int x, int y) {
     return -1;
 }
 
-void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity oppsArray[7], bool spelled/*This is in case the player attacks*/) {
+void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity oppsArray[7]) {
     system("cls");
     cout << "Use Z/Q/S/D to move!" << endl;
     for (int x = 0; x < lengthX; x++) {
         for (int y = 0; y < heightY; y++) {
             int enemyIndex = loopThroughEnemies(oppsArray, x, y);
-            if (spelled && x <= user.x + 1 && x >= user.x - 1 && y <= user.y + 1 && y >= user.y - 1 && !(x == user.x && y == user.y)) {
+            if (user.currentstate == attacked && x <= user.x + 1 && x >= user.x - 1 && y <= user.y + 1 && y >= user.y - 1 && !(x == user.x && y == user.y)) {
                 if (map[x][y] == 0) {
                     cout << '*' << ' ';
                 }
@@ -165,17 +168,34 @@ void beatLevel(int x, int y, int map[22][22], int* level, Entity* userPtr, Entit
 
 void spellHitEnemy(Entity enemyArray[7], Entity player) {
     int x = player.x - 1; int y = player.y - 1;
-
     for (int index = 0; index < 7; index++) {
 
         if (enemyArray[index].x <= player.x + 1 && enemyArray[index].x >= player.x - 1 && enemyArray[index].y <= player.y + 1 && enemyArray[index].y >= player.y - 1) {
-            recieveDamage(&enemyArray[index], player.damage);
-            if (enemyArray[index].HP <= 0) {
-                enemyArray[index].alive = false;
-            }
+            transition(&enemyArray[index], damaged);
         }
     }
 }
+
+void enemiesMoving(Entity* enemy, Entity player) {
+    int directionX = enemy->x; int directionY = enemy->y;
+    if (player.x < enemy->x) {
+        directionX--;
+    }
+    else if (player.y < enemy->y) {
+        directionY--;
+    }
+    else if (player.x > enemy->x) {
+        directionX++;
+    }
+    else if (player.y > enemy->y) {
+        directionY++;
+    }
+
+    if (canMove(directionX, directionY, map)) {
+        enemy->x = directionX; enemy->y = directionY;
+    }
+}
+
 
 /*
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {
