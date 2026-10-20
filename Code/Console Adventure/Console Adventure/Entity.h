@@ -27,6 +27,11 @@ struct Entity {
     int currentstate = moving;
 };
 
+struct FSM {
+    void (*test)(int, int);
+};
+
+
 Entity user{ 0, 0, 'H', 1, 1 }; Entity* userPtr = &user;
 
 Entity enemyArray[7]{
@@ -43,6 +48,7 @@ int tempMouvX; int tempMouvY;
 bool isAttacking = false; bool* isAttackingPtr= &isAttacking;
 
 void transition(Entity* entity, int futureState) {
+
     if (!(futureState < 5 || futureState > 0)) {
         cout << "the function that called this has a number that is out of bounds";
         abort();

@@ -21,6 +21,9 @@
     <ClCompile Include="Console Adventure.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Level1.txt">
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="backgroundFunctions.h">
       <Filter>Fichiers sources</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
