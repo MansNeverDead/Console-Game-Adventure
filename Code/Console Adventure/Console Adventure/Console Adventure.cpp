@@ -2,13 +2,15 @@
 //
 
 #include <iostream> // Basics
-#include <fstream> // To ppen files
+#include <fstream> // To open files
 #include <vector> // I believe this is self-explanatory
 #include<tuple> // This as well
 #include <conio.h> 
 #include <windows.h>
 #include <cwchar>
 #include <string> // To make getline() to work
+//#include "EnemyClass.h"
+//#include "Entity.h"
 
 using namespace std;
 
@@ -31,6 +33,15 @@ enum ground {
     sortie = 3
 };
 
+
+
+enum stateMachine {
+    moving = 0,
+    attacking = 1,
+    attacked = 2,
+    dying = 3,
+};
+
 /**
 int x;
 int y;
@@ -41,10 +52,12 @@ int damage;
 struct Entity {
     int x;
     int y;
-    char display = 'H';
+    char display = '0';
     int HP;
     int damage;
+    bool alive = true;
 };
+
 
 
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {
@@ -84,23 +97,36 @@ char translator(int num) {
     }
 }
 
-void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity oppsArray[7]) {
+int loopThroughEnemies(Entity oppsArray[7], int x, int y) {
+    for (int i = 0; i < 7; i++) {
+        if (x == oppsArray[i].x && y == oppsArray[i].y && oppsArray[i].alive) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity oppsArray[7], bool spelled/*This is in case the player attacks*/) {
     system("cls");
     cout << "Use Z/Q/S/D to move!" << endl;
     for (int x = 0; x < lengthX; x++) {
         for (int y = 0; y < heightY; y++) {
-            bool enemyPresent = false;
-            for (int i = 0; i < 7; i++) {
-                if (x == oppsArray[i].x && y == oppsArray[i].y) {
-                    cout << oppsArray[i].display << ' ';
-                    enemyPresent = true;
+            int enemyIndex = loopThroughEnemies(oppsArray, x, y);
+            if (spelled && x <= user.x + 1 && x >= user.x - 1 && y <= user.y + 1 && y >= user.y - 1 && !(x == user.x && y == user.y)) {
+                if (map[x][y] == 0) {
+                    cout << '*' << ' ';
+                }
+                else {
+                    cout << translator(map[x][y]) << ' ';
                 }
             }
-
-            if (x == user.x && y == user.y) {
+            else if (enemyIndex != -1) {
+                cout << oppsArray[enemyIndex].display << ' ';
+            }
+            else if (x == user.x && y == user.y) {
                 cout << user.display << ' ';
             }
-            else if (!enemyPresent) {
+            else {
                 cout << translator(map[x][y]) << ' ';
             }
         }
@@ -110,13 +136,13 @@ void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity
 
 int verifyInput() {
     char c = _getch();
-    if (c == 'z' || c == 'q' || c == 's' || c == 'd') {
+    if (c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 'a') {
         return c;
     }
     return NULL;
 }
 
-tuple <int, int> playerInput() {
+tuple <int, int> playerInput(bool* isAttacking) {
     int x = 0; int y = 0;
     char input = verifyInput();
     if (input == 'z') {
@@ -135,11 +161,10 @@ tuple <int, int> playerInput() {
         y = y + 1;
         return make_tuple(x, y);
     }
+    else if (input == 'a') {
+        *isAttacking = true;
+    }
     return make_tuple(NULL, NULL);
-}
-
-void enemiesMOVING(Entity* enemy) {
-    return;
 }
 
 bool canMove(int x, int y, const int map[22][22]) {
@@ -150,6 +175,27 @@ bool canMove(int x, int y, const int map[22][22]) {
         return false;
     }
     return true;
+}
+
+void enemiesMOVING(Entity* enemy, Entity oppsArray[7], Entity player, bool spelled) {
+    int directionX = enemy->x; int directionY = enemy->y;
+    if (player.x < enemy->x) {
+        directionX--;
+    }
+    else if (player.y < enemy->y) {
+        directionY--;
+    }
+    else if (player.x > enemy->x) {
+        directionX++;
+    }
+    else if (player.y > enemy->y) {
+        directionY++;
+    }
+
+    if (canMove(directionX, directionY, map) && loopThroughEnemies(oppsArray, directionX, directionY) == -1) {
+        enemy->x = directionX; enemy->y = directionY;
+    }
+
 }
 
 void deathScreen() {
@@ -180,9 +226,9 @@ void recieveDamage(Entity* victim, int damage) {
 };
 
 bool touchingEnemy(Entity user, Entity array[7]) {
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
         Entity opp = array[i];
-        if (user.x == opp.x && user.y == opp.y) {
+        if (user.x == opp.x && user.y == opp.y && opp.alive) {
             return true;
         }
     }
@@ -225,39 +271,74 @@ bool beatLevel(int x, int y, int map[22][22] ) {
     return false;
 }
 
+void spellHitEnemy(Entity enemyArray[7], Entity player) {
+    int x = player.x - 1; int y = player.y - 1;
+
+    for (int index = 0; index < 7; index++) {
+
+        if (enemyArray[index].x <= player.x + 1 && enemyArray[index].x >= player.x - 1 && enemyArray[index].y <= player.y + 1 && enemyArray[index].y >= player.y - 1) {
+            recieveDamage(&enemyArray[index], player.damage);
+            if (enemyArray[index].HP <= 0) {
+                enemyArray[index].alive = false;
+            }
+        }
+    }
+}
+
+void reviveEnemies(Entity array[7]) {
+    for (int i = 0; i < 7; i++) {
+        array[i].alive = true;
+    }
+}
+
+
+
 int main() {
-    Entity user{ 0, 0, 'H', 1};
+    Entity user{ 0, 0, 'H', 1, 1};
     Entity* userPtr = &user;
 
-    Entity firstEnemy{0, 0, 'X', 1, 1};
-    Entity secEnemy{0, 0, 'X', 1, 1};
-    Entity thEnemy{0, 0, 'X', 1, 1 };
-    Entity foEnemy{0, 0, 'X', 1, 1 };
-    Entity fiEnemy{0, 0, 'X', 1, 1 };
-    Entity sixEnemy{0, 0, 'X', 1, 1 };
-    Entity sevEnemy{0, 0, 'X', 1, 1 };
 
-    Entity enemyArray[7]{ firstEnemy, secEnemy, thEnemy, foEnemy, fiEnemy, sixEnemy, sevEnemy };
+    Entity enemyArray[7]{
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 },
+        {0, 0, 'X', 1, 1 } };
 
-    getMap("Level3", map, userPtr, enemyArray);
+    bool isAttacking = false; bool* isAttackingPtr = &isAttacking;
+    getMap("Level1", map, userPtr, enemyArray);
     //makeMap(22, 22, map);
-    visualiseMap(22, 22, map, user, enemyArray);
+    visualiseMap(22, 22, map, user, enemyArray, isAttacking);
     int addX = 0; int addY = 0;
     int tempMouvX; int tempMouvY;
     int atLevel = 1;
     while (true) {
-        tie(addX, addY) = playerInput();
+        isAttacking = false;
+
+        tie(addX, addY) = playerInput(isAttackingPtr);
         tempMouvX = user.x + addX;
         tempMouvY = user.y + addY;
+        
         
         if (canMove(tempMouvX, tempMouvY, map)) {
             user.x = tempMouvX; user.y = tempMouvY;
         }
+        for (int i = 0; i < 7; i++) {
+            Entity* opp = &enemyArray[i];
+            enemiesMOVING(opp, enemyArray, user, isAttacking);
+        }
+        if (isAttacking) {
+            spellHitEnemy(enemyArray, user);
+        }
         if (beatLevel(tempMouvX, tempMouvY, map) && atLevel == 1) {
+            reviveEnemies(enemyArray);
             getMap("Level2", map, userPtr, enemyArray);
             atLevel = 2;
         }
         if (beatLevel(tempMouvX, tempMouvY, map) && atLevel == 2) {
+            reviveEnemies(enemyArray);
             getMap("Level3", map, userPtr, enemyArray);
             atLevel = 3;
         }
@@ -266,20 +347,20 @@ int main() {
             cout << "You won...\nYou beat every level..\nYou outbested my every attempt at making you lose...\nYou beated the odds and won.\nSo cheer, celebrate like no tomorrow, for the Winner takes it ALL.";
             break;
         }
+
+        
         if (touchingEnemy(user, enemyArray)) {
-            recieveDamage(userPtr, firstEnemy);
+            recieveDamage(userPtr, 1);
             if (user.HP <= 0) {
                 deathScreen();
                 break;
             }
         }
-        else {
-            visualiseMap(22, 22, map, user, enemyArray);
-        }
+
+        visualiseMap(22, 22, map, user, enemyArray, isAttacking);
 
 
     }
     
-    //cout << bs << endl << map[5][5];
 }
 

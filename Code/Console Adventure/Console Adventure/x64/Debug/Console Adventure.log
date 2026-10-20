@@ -1,4 +1,4 @@
 ﻿  Console Adventure.cpp
-C:\Users\ayetti\Documents\Github\Console Adventure Map\Code\Console Adventure\Console Adventure\Console Adventure.cpp(163,44): error C2065: 'csbi' : identificateur non déclaré
-C:\Users\ayetti\Documents\Github\Console Adventure Map\Code\Console Adventure\Console Adventure\Console Adventure.cpp(165,5): error C2065: 'csbi' : identificateur non déclaré
-C:\Users\ayetti\Documents\Github\Console Adventure Map\Code\Console Adventure\Console Adventure\Console Adventure.cpp(167,44): error C2065: 'csbi' : identificateur non déclaré
+  EnemyClass.h
+  Génération de code en cours...
+  Console Adventure.vcxproj -> C:\Users\ayetti\Documents\Github\Console Adventure Map\Code\Console Adventure\x64\Debug\Console Adventure.exe
