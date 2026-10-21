@@ -1,6 +1,5 @@
 #include "Entity.h"
 #include <fstream> // To open files
-#include <vector> // I believe this is self-explanatory
 #include <string> // To make getline() to work
 
 
@@ -12,9 +11,6 @@ enum ground {
     river = 2,
     sortie = 3
 };
-
-
-
 
 char translator(int num) {
     if (num == basicGround) {
@@ -71,29 +67,6 @@ void visualiseMap(int lengthX, int heightY, int map[22][22], Entity user, Entity
     }
 }
 
-void deathScreen() {
-    system("cls");
-    CONSOLE_FONT_INFOEX cfi;
-    cfi.cbSize = sizeof(cfi);
-    cfi.nFont = 0;
-    cfi.dwFontSize.X = 0;                   // Width of each character in the font
-    cfi.dwFontSize.Y = 100;                  // Height
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi); //essentially saves the values we previously initialised
-    CONSOLE_SCREEN_BUFFER_INFOEX csbi{ sizeof csbi }; // Creates the CSBI struct where it saves all the aforemetionned variables
-
-    HANDLE hOutput = GetStdHandle(STD_OUTPUT_HANDLE); // This is essentially "cout" but for windows
-
-    GetConsoleScreenBufferInfoEx(hOutput, &csbi); // sets the current csbi to the current settings of the console
-
-    csbi.wAttributes = BACKGROUND_RED; //...
-
-    SetConsoleScreenBufferInfoEx(hOutput, &csbi); // updates the console's settings to everything mantionned above
-    ::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
-    printf("YOU DIED!!!!\n");
-
-
-}
-
 void reviveEnemies(Entity array[7]) {
     for (int i = 0; i < 7; i++) {
         array[i].alive = true;
@@ -124,6 +97,33 @@ void getMap(string levelName, int grid[22][22], Entity* player, Entity* enemies)
             }
         }
     }
+    reviveEnemies(enemyArray);
+}
+
+void deathScreen() {
+    system("cls");
+    cout << "..   ..   .....   ..   ..      ......   .......  .......  ......" << endl;
+    cout << "..   ..  ..   ..  ..   ..      ..   ..    ...    ..       ..   .." << endl;
+    cout << " .. ..   ..   ..  ..   ..      ..   ..    ...    ..       ..   .." << endl;
+    cout << "  ...    ..   ..  ..   ..      ..   ..    ...    ......   ..   .." << endl;
+    cout << "  ...    ..   ..  ..   ..      ..   ..    ...    ..       ..   .." << endl;
+    cout << "  ...    ..   ..  ..   ..      ..   ..    ...    ..       ..   .." << endl;
+    cout << "  ...     .....    .....       ......   .......  .......  ......" << endl;
+    cout << "Do you want to try again?\n y = oui\n n= Non" << endl;
+    char choice;
+    cin >> choice;
+    if (choice == 'y' || choice == 'Y') {
+        getMap("Level1", map, userPtr, enemyArray);
+        level = 0;
+    }
+    else if (choice == 'n' || choice == 'N') {
+        exit(0);
+    }
+    else { 
+        cout << "t'as eu une crise cardiaque ou tu n'sais pas lire?" << endl;
+        exit(0);
+    }
+
 }
 
 bool canMove(int x, int y, const int map[22][22]) {
@@ -171,31 +171,38 @@ void spellHitEnemy(Entity enemyArray[7], Entity player) {
     for (int index = 0; index < 7; index++) {
 
         if (enemyArray[index].x <= player.x + 1 && enemyArray[index].x >= player.x - 1 && enemyArray[index].y <= player.y + 1 && enemyArray[index].y >= player.y - 1) {
-            transition(&enemyArray[index], damaged);
+            Entity* enemyPtr = &enemyArray[index];
+            transition(enemyPtr, damaged);
+            runCurrentState(enemyPtr);
         }
     }
 }
 
-void enemiesMoving(Entity* enemy, Entity player) {
+void enemiesMoving(Entity* enemy, Entity player, Entity enemyArray[7]) {
     int directionX = enemy->x; int directionY = enemy->y;
+
     if (player.x < enemy->x) {
-        directionX--;
+        directionX -= 1;
     }
     else if (player.y < enemy->y) {
-        directionY--;
+        directionY-=1;
     }
     else if (player.x > enemy->x) {
-        directionX++;
+        directionX+=1;
     }
     else if (player.y > enemy->y) {
-        directionY++;
+        directionY+=1;
     }
-
-    if (canMove(directionX, directionY, map)) {
+    bool superposition = false;
+    for (int i = 0; i < 7; i++) {
+        if (enemyArray[i].x == directionX && enemyArray[i].y == directionY) {
+            superposition = true;
+        }
+    }
+    if (canMove(directionX, directionY, map) && !superposition) {
         enemy->x = directionX; enemy->y = directionY;
     }
 }
-
 
 /*
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {

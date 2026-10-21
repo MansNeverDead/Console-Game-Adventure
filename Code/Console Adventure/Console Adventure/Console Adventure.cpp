@@ -20,6 +20,7 @@ int main() {
 
         beatLevel(tempMouvX, tempMouvY, map, &atLevel, userPtr, enemyArray);
 
+
         if (touchingEnemy(user, enemyArray)) {
             transition(userPtr, damaged);
             runCurrentState(userPtr);

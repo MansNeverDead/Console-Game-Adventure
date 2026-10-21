@@ -1,9 +1,6 @@
 #pragma once
-#include <windows.h>
-#include <conio.h> 
-#include <cwchar>
+#include <conio.h> // used to use _getch 
 #include <tuple>
-
 
 using namespace std;
 
@@ -57,6 +54,14 @@ void transition(Entity* entity, int futureState) {
     entity->currentstate = futureState;
 }
 
+//Here we declare the functions, however because they are stored inside of backgroundFunctions they won't see it
+//Hence we declare them here so the function can still be used while the code will be run inside of backgroundFunctions.
+bool canMove(int x, int y, const int map[22][22]);
+void enemiesMoving(Entity* enemy, Entity player, Entity enemyArray[7]);
+void spellHitEnemy(Entity enemyArray[7], Entity player);
+void deathScreen();
+void runCurrentState(Entity* entity);
+
 int verifyInput() {
     char c = _getch();
     if (c == 'z' || c == 'q' || c == 's' || c == 'd' || c == 'a') {
@@ -86,11 +91,10 @@ tuple <int, int> playerInput(bool* isAttacking) {
     }
     else if (input == 'a') {
         transition(userPtr, attacked);
+        runCurrentState(userPtr);
     }
     return make_tuple(NULL, NULL);
 }
-
-void runCurrentState(Entity* entity);
 
 void recieveDamage(Entity* victim, int damage) {
     victim->HP = victim->HP - damage;
@@ -100,24 +104,14 @@ void recieveDamage(Entity* victim, int damage) {
     }
     else {
         transition(victim, moving);
+        runCurrentState(victim);
     }
 };
-
-
-
-//Here we declare the functions, however because they are stored inside of backgroundFunctions they won't see it
-//Hence we declare them here so the function can still be used while the code will be run inside of backgroundFunctions.
-bool canMove(int x, int y, const int map[22][22]);
-void enemiesMoving(Entity* enemy, Entity player);
-void spellHitEnemy(Entity enemyArray[7], Entity player);
-void deathScreen();
-
 
 void dyingFunc(Entity* entity, Entity* user) {
     if (entity == user) {
         entity->alive = false;
         deathScreen();
-        abort();
     }
     else {
         entity->alive = false; 
@@ -135,13 +129,13 @@ void movingEntity(Entity* entity, Entity* player) {
     }
     else {
         for (int i = 0; i < 7; i++) {
-            enemiesMoving(&enemyArray[i], user);
+            enemiesMoving(&enemyArray[i], user, enemyArray);
         }
     }
 }
 
 void runCurrentState(Entity* entity) {
-    if (entity->currentstate == moving) {
+    if (entity->currentstate == moving && userPtr->currentstate != attacked) {
         movingEntity(entity, userPtr);
     }
     else if (entity->currentstate == attacked) {
