@@ -18,7 +18,7 @@ int main() {
         runCurrentState(userPtr);
         runCurrentState(enemyArray);
 
-        beatLevel(tempMouvX, tempMouvY, map, &atLevel, userPtr, enemyArray);
+        beatLevel(userPtr->x, userPtr->y, map, &atLevel, userPtr, enemyArray);
 
 
         if (touchingEnemy(user, enemyArray)) {

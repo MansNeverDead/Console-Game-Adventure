@@ -41,7 +41,6 @@ Entity enemyArray[7]{
     {0, 0, 'X', 1, 1 } };
 
 int addX = 0; int addY = 0;
-int tempMouvX; int tempMouvY;
 bool isAttacking = false; bool* isAttackingPtr= &isAttacking;
 
 void transition(Entity* entity, int futureState) {
@@ -119,6 +118,8 @@ void dyingFunc(Entity* entity, Entity* user) {
 }
 
 void movingEntity(Entity* entity, Entity* player) {
+    int tempMouvX; int tempMouvY;
+
     if (entity == player) {
         tie(addX, addY) = playerInput(isAttackingPtr);
         tempMouvX = player->x + addX;

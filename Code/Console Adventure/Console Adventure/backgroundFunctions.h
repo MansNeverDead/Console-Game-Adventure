@@ -178,31 +178,35 @@ void spellHitEnemy(Entity enemyArray[7], Entity player) {
     }
 }
 
-void enemiesMoving(Entity* enemy, Entity player, Entity enemyArray[7]) {
-    int directionX = enemy->x; int directionY = enemy->y;
+bool canWalk(int x, int y) {
+    if (x < 0 || x >= 22 || y < 0 || y >= 22) return false;  
+    if (map[x][y] != basicGround) return false;            
 
-    if (player.x < enemy->x) {
-        directionX -= 1;
+    for (int i = 0; i < 7; i++) {                            
+        if (enemyArray[i].x == x && enemyArray[i].y == y) return false;
     }
-    else if (player.y < enemy->y) {
-        directionY-=1;
+    return true;
+}
+
+void enemiesMoving(Entity* enemy, Entity player, Entity enemyArray[7]) {
+    int stepX = 0;
+    int stepY = 0;
+
+    if (player.x < enemy->x) stepX = -1;
+    else if (player.x > enemy->x) stepX = 1;
+
+    if (player.y < enemy->y) stepY = -1;
+    else if (player.y > enemy->y) stepY = 1;
+
+    // 2. Try to move on X first, otherwise try Y
+    if (stepX != 0 && canWalk(enemy->x + stepX, enemy->y)) {
+        enemy->x += stepX;
     }
-    else if (player.x > enemy->x) {
-        directionX+=1;
-    }
-    else if (player.y > enemy->y) {
-        directionY+=1;
-    }
-    bool superposition = false;
-    for (int i = 0; i < 7; i++) {
-        if (enemyArray[i].x == directionX && enemyArray[i].y == directionY) {
-            superposition = true;
-        }
-    }
-    if (canMove(directionX, directionY, map) && !superposition) {
-        enemy->x = directionX; enemy->y = directionY;
+    else if (stepY != 0 && canWalk(enemy->x, enemy->y + stepY)) {
+        enemy->y += stepY;
     }
 }
+
 
 /*
 void makeMap(int lengthX, int heightY, int mapFunction[22][22]) {
